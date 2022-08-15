@@ -137,7 +137,7 @@ def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> Li
     :param limit:
       maximum number of total yaml combinations
     :return:
-      list of yaml file list
+      list of yaml file tuples
     """
     from pathlib import Path
     from random import Random
@@ -187,7 +187,7 @@ def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> Li
     solo_candidates = []
     for game, yamls in game_yamls.items():
         for yaml in yamls:
-            if {yaml} not in res:
+            if (yaml,) not in res:
                 solo_candidates.append((yaml,))
 
     rng = Random(0)
