@@ -1,0 +1,26 @@
+name: Sanic1_minimal
+game: Sonic Adventure 2 Battle
+description: random, minimal accessibility
+Sonic Adventure 2 Battle:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  include_missions: random
+  required_rank: random
+  emblem_percentage_for_cannons_core: random
+  number_of_level_gates: random
+  level_gate_distribution: random
+  level_gate_costs: random
+  chao_garden_difficulty: random
+  include_chao_karate: random
+  chao_race_checks: random
+  junk_fill_percentage: random
+  trap_fill_percentage: random
+  omochao_trap_weight: random
+  timestop_trap_weight: random
+  confusion_trap_weight: random
+  tiny_trap_weight: random
+  music_shuffle: random
+  death_link: random

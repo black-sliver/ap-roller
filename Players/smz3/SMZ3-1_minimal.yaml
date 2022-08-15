@@ -1,0 +1,13 @@
+name: SMZ3-1_minimal
+game: SMZ3
+description: random, keysanity, minimal accessibility
+SMZ3:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  sm_logic: random
+  sword_location: random
+  morph_location: random
+  key_shuffle: keysanity

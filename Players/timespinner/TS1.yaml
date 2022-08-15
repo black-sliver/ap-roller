@@ -1,0 +1,34 @@
+name: TS1
+game: Timespinner
+description: mostly random, non-inverted, non-minimal
+Timespinner:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  StartWithJewelryBox: random
+  DownloadableItems: random
+  EyeSpy: random
+  StartWithMeyef: random
+  QuickSeed: random
+  SpecificKeycards: random
+  Inverted: 'false'
+  GyreArchives: random
+  Cantoran: random
+  LoreChecks: random
+  BossRando: random
+  BossScaling: random
+  DamageRando: random
+  HpCap: 999
+  BossHealing: random
+  ShopFill: random
+  ShopWarpShards: random
+  ShopMultiplier: 1
+  LootPool: random
+  DropRateCategory: random
+  FixedDropRate: 5
+  LootTierDistro: random
+  ShowBestiary: random
+  ShowDrops: random
+  DeathLink: random

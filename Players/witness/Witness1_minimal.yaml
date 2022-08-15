@@ -1,0 +1,23 @@
+name: Witness1_minimal
+game: The Witness
+description: laser shuffle, random, minimal accessibility
+The Witness:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  shuffle_symbols: random
+  shuffle_doors: random
+  shuffle_lasers: true
+  disable_non_randomized_puzzles: random
+  shuffle_discarded_panels: random
+  shuffle_vault_boxes: random
+  shuffle_uncommon: random
+  shuffle_postgame: random
+  victory_condition: random
+  mountain_lasers: random
+  challenge_lasers: random
+  early_secret_area: random
+  trap_percentage: random
+  puzzle_skip_amount: random

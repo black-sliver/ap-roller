@@ -1,0 +1,23 @@
+name: sm64-1
+game: Super Mario 64
+description: random, non-minimal
+Super Mario 64:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  AreaRandomizer: random
+  ProgressiveKeys: random
+  EnableCoinStars: random
+  AmountOfStars: random
+  StrictCapRequirements: random
+  StrictCannonRequirements: random
+  FirstBowserStarDoorCost: random
+  BasementStarDoorCost: random
+  SecondFloorStarDoorCost: random
+  MIPS1Cost: random
+  MIPS2Cost: random
+  StarsToFinish: random
+  death_link: random
+  BuddyChecks: random

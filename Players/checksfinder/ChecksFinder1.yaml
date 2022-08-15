@@ -1,0 +1,7 @@
+name: ChecksFinder1
+game: ChecksFinder
+description: default settings
+ChecksFinder:
+  progression_balancing: 0
+  accessibility: items
+

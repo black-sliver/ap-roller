@@ -1,0 +1,23 @@
+name: Witness2
+game: The Witness
+description: symbol shuffle, random, non-minimal
+The Witness:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  shuffle_symbols: true
+  shuffle_doors: random
+  shuffle_lasers: random
+  disable_non_randomized_puzzles: random
+  shuffle_discarded_panels: random
+  shuffle_vault_boxes: random
+  shuffle_uncommon: random
+  shuffle_postgame: random
+  victory_condition: random
+  mountain_lasers: random
+  challenge_lasers: random
+  early_secret_area: random
+  trap_percentage: random
+  puzzle_skip_amount: random

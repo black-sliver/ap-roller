@@ -1,0 +1,39 @@
+name: RL-1
+game: Rogue Legacy
+description: random, non-minimal
+Rogue Legacy:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  starting_gender: random
+  starting_class: random
+  new_game_plus: random
+  fairy_chests_per_zone: random
+  chests_per_zone: random
+  universal_fairy_chests: random
+  universal_chests: random
+  vendors: random
+  architect: random
+  architect_fee: random
+  disable_charon: random
+  require_purchasing: random
+  progressive_blueprints: random
+  gold_gain_multiplier: random
+  number_of_children: random
+  free_diary_on_generation: random
+  khidr: random
+  alexander: random
+  leon: random
+  herodotus: random
+  health_pool: random
+  mana_pool: random
+  attack_pool: random
+  magic_damage_pool: random
+  armor_pool: random
+  equip_pool: random
+  crit_chance_pool: random
+  crit_damage_pool: random
+  allow_default_names: true
+  death_link: random

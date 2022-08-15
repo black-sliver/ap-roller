@@ -1,0 +1,48 @@
+name: Alttp2_minimal
+game: A Link to the Past
+description: mostly random, minimal accessibility
+A Link to the Past:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  crystals_needed_for_gt: 7
+  crystals_needed_for_ganon: 7
+  open_pyramid: random
+  bigkey_shuffle: random
+  smallkey_shuffle: random
+  compass_shuffle: random
+  map_shuffle: random
+  progressive: random
+  swordless: random
+  retro_bow: random
+  retro_caves: random
+  hints: random
+  scams: random
+  restrict_dungeon_item_on_boss: random
+  pot_shuffle: random
+  enemy_shuffle: random
+  killable_thieves: random
+  bush_shuffle: random
+  shop_item_slots: random
+  shop_price_modifier: 100
+  tile_shuffle: random
+  ow_palettes: random
+  uw_palettes: random
+  hud_palettes: random
+  sword_palettes: random
+  shield_palettes: random
+  link_palettes: random
+  heartbeep: random
+  heartcolor: random
+  quickswap: random
+  menuspeed: random
+  music: random
+  reduceflashing: random
+  triforcehud: random
+  glitch_boots: random
+  beemizer_total_chance: 10
+  beemizer_trap_chance: 60
+  death_link: random
+  allow_collect: 'false'

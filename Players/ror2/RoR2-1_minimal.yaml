@@ -1,0 +1,27 @@
+name: RoR2-1_minimal
+game: Risk of Rain 2
+description: all random, minimal accessibility
+Risk of Rain 2:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  total_locations: random
+  total_revivals: random
+  start_with_revive: random
+  final_stage_death: random
+  item_pickup_step: random
+  enable_lunar: random
+  item_weights: random
+  item_pool_presets: random
+  green_scrap: random
+  red_scrap: random
+  yellow_scrap: random
+  white_scrap: random
+  common_item: random
+  uncommon_item: random
+  legendary_item: random
+  boss_item: random
+  lunar_item: random
+  equipment: random

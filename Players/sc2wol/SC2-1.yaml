@@ -1,0 +1,16 @@
+name: SC2-1
+game: Starcraft 2 Wings of Liberty
+description: random, vanilla order, non-minimal
+Starcraft 2 Wings of Liberty:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  game_difficulty: random
+  upgrade_bonus: random
+  bunker_upgrade: random
+  all_in_map: random
+  mission_order: vanilla
+  shuffle_protoss: random
+  relegate_no_build: random

@@ -1,0 +1,13 @@
+name: Subnautica2_minimal
+game: Subnautica
+description: valuable pool, random goal, minimal accessibility
+Subnautica:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  item_pool: valuable
+  goal: random
+  creature_scans: random
+  death_link: random

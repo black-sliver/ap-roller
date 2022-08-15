@@ -1,0 +1,19 @@
+name: Raft2
+game: Raft
+description: mostly random, non-progressive, non-minimal
+Raft:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  use_resource_packs: random
+  minimum_resource_pack_amount: 1
+  maximum_resource_pack_amount: 5
+  duplicate_items: random
+  island_frequency_locations: random
+  island_generation_distance: random
+  expensive_research: random
+  progressive_items: 'false'
+  big_island_early_crafting: random
+  paddleboard_mode: random

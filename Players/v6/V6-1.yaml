@@ -1,0 +1,15 @@
+name: V6-1
+game: VVVVVV
+description: random, non-minimal
+VVVVVV:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  MusicRandomizer: random
+  AreaRandomizer: random
+  DoorCost: random
+  AreaCostRandomizer: random
+  death_link: random
+  DeathLinkAmnesty: random

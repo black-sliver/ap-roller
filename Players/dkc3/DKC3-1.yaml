@@ -1,0 +1,19 @@
+name: DKC3-1
+game: Donkey Kong Country 3
+description: random, knautilus, non-minimal
+Donkey Kong Country 3:
+  progression_balancing: random
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  goal: knautilus
+  dk_coins_for_gyrocopter: random
+  krematoa_bonus_coin_cost: random
+  percentage_of_extra_bonus_coins: random
+  number_of_banana_birds: random
+  percentage_of_banana_birds: random
+  level_shuffle: random
+  music_shuffle: random
+  kong_palette_swap: random
+  starting_life_count: random

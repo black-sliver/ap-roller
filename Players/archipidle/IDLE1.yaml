@@ -1,0 +1,6 @@
+name: IDLE1
+game: ArchipIDLE
+description: default settings
+ArchipIDLE:
+  progression_balancing: 0
+  accessibility: items

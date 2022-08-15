@@ -1,0 +1,9 @@
+name: Spire1
+game: Slay the Spire
+description: random
+Slay the Spire:
+  progression_balancing: 0
+  accessibility: items
+  character: random
+  ascension: random
+  heart_run: random

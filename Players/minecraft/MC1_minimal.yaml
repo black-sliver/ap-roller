@@ -1,0 +1,22 @@
+name: MC1
+game: Minecraft
+description: mostly random, include default, minimal accessibility
+Minecraft:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  advancement_goal: 40
+  egg_shards_required: 0
+  egg_shards_available: 0
+  required_bosses: random
+  shuffle_structures: random
+  structure_compasses: random
+  bee_traps: 1
+  combat_difficulty: random
+  include_hard_advancements: 'false'
+  include_unreasonable_advancements: 'false'
+  include_postgame_advancements: 'false'
+  send_defeated_mobs: random
+  death_link: random

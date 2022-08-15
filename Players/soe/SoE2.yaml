@@ -1,0 +1,39 @@
+name: SoE2
+game: Secret of Evermore
+description: non-minimal, very random, shuffled energy core
+
+Secret of Evermore:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  difficulty: random
+  energy_core:
+    vanilla: 0
+    shuffle: 1
+    fragments: 0
+  required_fragments: random
+  available_fragments: random
+  money_modifier: 200
+  exp_modifier: 200
+  fix_sequence: random
+  fix_cheats: random
+  fix_infinite_ammo: random
+  fix_atlas_glitch: random
+  fix_wings_glitch: random
+  shorter_dialogs: random
+  short_boss_rush: random
+  ingredienizer: random
+  sniffamizer: random
+  callbeadamizer: random
+  musicmizer: random
+  doggomizer: random
+  turdo_mode: random
+  death_link: random
+  trap_count: random
+  trap_chance_quake: random
+  trap_chance_poison: random
+  trap_chance_confound: random
+  trap_chance_hud: random
+  trap_chance_ohko: random

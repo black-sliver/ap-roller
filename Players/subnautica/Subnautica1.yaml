@@ -1,0 +1,13 @@
+name: Subnautica1
+game: Subnautica
+description: standard pool, random goal, non-minimal
+Subnautica:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  item_pool: standard
+  goal: random
+  creature_scans: 0
+  death_link: random

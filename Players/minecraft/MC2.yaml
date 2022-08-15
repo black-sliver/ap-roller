@@ -1,0 +1,22 @@
+name: MC2
+game: Minecraft
+description: mostly random, include all, non-minimal
+Minecraft:
+  progression_balancing: 0
+  accessibility:
+    items: 1
+    locations: 1
+    minimal: 0
+  advancement_goal: 50
+  egg_shards_required: 1
+  egg_shards_available: 1
+  required_bosses: random
+  shuffle_structures: random
+  structure_compasses: random
+  bee_traps: 1
+  combat_difficulty: random
+  include_hard_advancements: 'true'
+  include_unreasonable_advancements: 'true'
+  include_postgame_advancements: 'true'
+  send_defeated_mobs: random
+  death_link: random

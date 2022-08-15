@@ -1,0 +1,26 @@
+name: Factorio2_minimal
+game: Factorio
+description: mostly random, random progressive techs, minimal accessibility
+Factorio:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  max_science_pack: random
+  goal: rocket
+  tech_tree_layout: random
+  tech_cost: random
+  silo: random
+  satellite: random
+  free_samples: random
+  tech_tree_information: none
+  recipe_time: random
+  recipe_ingredients: random
+  imported_blueprints: random
+  progressive: grouped_random
+  evolution_traps: 1
+  attack_traps: 1
+  evolution_trap_increase: 10
+  death_link: random
+  energy_link: random

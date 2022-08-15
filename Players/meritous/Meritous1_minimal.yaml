@@ -1,0 +1,14 @@
+name: Meritous1_minimal
+game: Meritous
+description: random, minimal accessibility
+Meritous:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  goal: random
+  include_psi_keys: random
+  include_evolution_traps: random
+  item_cache_cost: random
+  death_link: random

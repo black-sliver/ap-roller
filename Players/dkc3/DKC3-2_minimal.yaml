@@ -1,0 +1,19 @@
+name: DKC3-2_minimal
+game: Donkey Kong Country 3
+description: random, bird hunt, minimal accessibility
+Donkey Kong Country 3:
+  progression_balancing: random
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  goal: banana_bird_hunt
+  dk_coins_for_gyrocopter: random
+  krematoa_bonus_coin_cost: random
+  percentage_of_extra_bonus_coins: random
+  number_of_banana_birds: random
+  percentage_of_banana_birds: random
+  level_shuffle: random
+  music_shuffle: random
+  kong_palette_swap: random
+  starting_life_count: random

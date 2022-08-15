@@ -1,0 +1,56 @@
+name: SM1
+game: Super Metroid
+description: non-minimal, very random, custom presets disabled
+
+Super Metroid:
+  progression_balancing: 0
+  accessibility:
+    locations: 1
+    items: 1
+    minimal: 0
+  start_inventory_removes_from_pool: random
+  preset:
+    newbie: 1
+    casual: 1
+    regular: 1
+    veteran: 1
+    expert: 1
+    master: 1
+    samus: 1
+    season_races: 1
+    smrat2021: 1
+    solution: 1
+    custom: 0
+    varia_custom: 0
+  start_location: random
+  remote_items: random
+  death_link: random
+  max_difficulty: random
+  morph_placement: random
+  strict_minors: random
+  missile_qty: random
+  super_qty: random
+  power_bomb_qty: random
+  minor_qty: random
+  energy_qty: random
+  area_randomization: random
+  area_layout: random
+  doors_colors_rando: random
+  allow_grey_doors: random
+  boss_randomization: random
+  fun_combat: random
+  fun_movement: random
+  fun_suits: random
+  layout_patches: random
+  varia_tweaks: random
+  nerfed_charge: random
+  gravity_behaviour: random
+  elevators_doors_speed: random
+  spin_jump_restart: random
+  rando_speed: random
+  infinite_space_jump: random
+  refill_before_save: random
+  hud: random
+  animals: random
+  no_music: random
+  random_music: random

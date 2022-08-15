@@ -1,0 +1,34 @@
+name: TS2_minimal
+game: Timespinner
+description: mostly random, inverted, minimal accessibility
+Timespinner:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  StartWithJewelryBox: random
+  DownloadableItems: random
+  EyeSpy: random
+  StartWithMeyef: random
+  QuickSeed: random
+  SpecificKeycards: random
+  Inverted: 'true'
+  GyreArchives: random
+  Cantoran: random
+  LoreChecks: random
+  BossRando: random
+  BossScaling: random
+  DamageRando: random
+  HpCap: 999
+  BossHealing: random
+  ShopFill: random
+  ShopWarpShards: random
+  ShopMultiplier: 1
+  LootPool: random
+  DropRateCategory: random
+  FixedDropRate: 5
+  LootTierDistro: random
+  ShowBestiary: random
+  ShowDrops: random
+  DeathLink: random

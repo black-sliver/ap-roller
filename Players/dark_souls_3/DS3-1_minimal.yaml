@@ -1,0 +1,14 @@
+name: DS3-1_minimal
+game: Dark Souls III
+description: random, minimal accssibility
+Dark Souls III:
+  progression_balancing: 0
+  accessibility:
+    items: 0
+    locations: 0
+    minimal: 1
+  auto_equip: random
+  lock_equip: random
+  no_weapon_requirements: random
+  randomize_weapons_level: random
+  late_basin_of_vows: random
