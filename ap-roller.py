@@ -11,17 +11,17 @@ from base64 import urlsafe_b64encode
 from collections.abc import Iterable
 from functools import lru_cache
 from statistics import mean
-from typing import Any, Dict, List, NamedTuple, Optional, Set, Tuple, Union
+from typing import Any, Dict, List, NamedTuple, Optional, Tuple, Union
 
 if typing.TYPE_CHECKING:
     import argparse
     import pathlib
-    Path = Union[str, pathlib.Path]
+    PathLike = Union[str, pathlib.Path]
 else:
-    Path = None
+    PathLike = Any
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 try:
     def get_rev():
         # noinspection PyUnresolvedReferences
@@ -38,14 +38,14 @@ is_windows = os.name == "nt"
 
 
 class APInstall(NamedTuple):
-    path: Path
+    path: PathLike
     venv: Optional[str] = None
 
-    def __str__(self):
+    def __str__(self) -> str:
         return os.path.normpath(os.path.join(self.path, self.venv) if self.venv else self.path)
 
     @lru_cache
-    def get_short_name(self, all: Optional[Tuple["APInstall"]] = None, min_segments: int = 1):
+    def get_short_name(self, all: Optional[Tuple["APInstall"]] = None, min_segments: int = 1) -> str:
         """return a short path-like name that is unique across all"""
         if all is None:
             return str(self)
@@ -71,7 +71,7 @@ def _b64hash(*args: Any) -> str:
     return urlsafe_b64encode(str(hash(*args)).encode("utf-8")).rstrip(b"=").decode("ascii")
 
 
-def _enter_venv(install: Path, venv: Optional[str] = None, msg: Optional[str] = None) -> str:
+def _enter_venv(install: PathLike, venv: Optional[str] = None, msg: Optional[str] = None) -> str:
     script = f'cd "{install}"; '
     if is_windows and venv:
         script += f'{venv}\\Scripts\\activate.bat; '
@@ -84,23 +84,24 @@ def _enter_venv(install: Path, venv: Optional[str] = None, msg: Optional[str] = 
     return script
 
 
-def generate(ap: APInstall, seed: str, yamls: Iterable[Path], output_dir: Optional[Path],
-             py_args: List[str] = [], ap_args: Dict[str, str] = {}) -> Optional[float]:
+def generate(ap: APInstall, seed: str, yamls: Iterable[PathLike], output_dir: Optional[PathLike],
+             py_args: Optional[List[str]] = None, ap_args: Optional[Dict[str, str]] = None) -> Optional[float]:
     install, venv = ap
     with tempfile.TemporaryDirectory() as tmpin:
         with tempfile.TemporaryDirectory() as tmpout:
             for yaml in yamls:
                 shutil.copy(yaml, tmpin)
             args = f'--player_files_path "{tmpin}" --outputpath "{tmpout}" --seed "{seed}"'
-            for key, val in ap_args.items():
-                args += f'--{key} "{val}"' if " " in val else f'--{key} {val}'
+            if ap_args:
+                for key, val in ap_args.items():
+                    args += f'--{key} "{val}"' if " " in val else f'--{key} {val}'
             script = _enter_venv(install, venv, "Starting generate")
-            script += f'echo "" | python {" ".join(py_args)} Generate.py {args}'
+            script += f'echo "" | python {" ".join(py_args) if py_args else ""} Generate.py {args}'
             start = time.monotonic()
             try:
                 res = subprocess.run(script, shell=True, capture_output=True, text=True, timeout=60)
             except subprocess.TimeoutExpired as ex:
-                res = subprocess.CompletedProcess(None, -1, "",
+                res = subprocess.CompletedProcess(script, -1, "",
                                                   str(ex).replace("timed out after", "\ntimed out after"))
             end = time.monotonic()
             if res.returncode == 0:
@@ -126,15 +127,15 @@ def generate(ap: APInstall, seed: str, yamls: Iterable[Path], output_dir: Option
             return None  # did not complete
 
 
-def module_update(ap: APInstall, py_args: List[str] = []) -> None:
+def module_update(ap: APInstall, py_args: Optional[List[str]] = None) -> None:
     install, venv = ap
     script = _enter_venv(install, venv, "Running ModuleUpdate")
-    script += f'echo "" | python {" ".join(py_args)} ModuleUpdate.py -y'
+    script += f'echo "" | python {" ".join(py_args) if py_args else ""} ModuleUpdate.py -y'
     if subprocess.run(script, shell=True, timeout=30).returncode:
         raise Exception(f"Error running ModuleUpdate for '{ap}'")
 
 
-def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> List[Tuple[str]]:
+def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> List[Tuple[str, ...]]:
     """
     Create a list of yaml combinations to roll.
 
@@ -161,23 +162,23 @@ def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> Li
          and (include is None or f.name in include)
          and (exclude is None or f.name not in exclude)])
 
-    def match_minimal(f):
+    def match_minimal(f: str) -> bool:
         return f.endswith("_minimal.yaml")
 
-    def match_default(f):
+    def match_default(f: str) -> bool:
         return not match_minimal(f)
 
-    def match_all(f):
+    def match_all(_: str) -> bool:
         return True
 
     match = match_minimal if mode == "minimal" else match_all if mode == "all" else match_default
-    game_yamls = dict(filter(lambda kv: kv[1], (
+    game_yamls: Dict[str, List[str]] = dict(filter(lambda kv: kv[1], (
         (game.name, sorted([str(f) for f in game.iterdir() if f.is_file() and match(f.name)]))
         for game in game_dirs
         )))
     games = list(game_yamls.keys())
     game_count = len(games)
-    res: List[Tuple[str]] = []
+    res: List[Tuple[str, ...]] = []
     for game, yamls in game_yamls.items():
         count = len(yamls)
         # 1. solo - 1 yaml per game
@@ -208,12 +209,12 @@ def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> Li
     mixed_collisions = 0
     while len(res) < limit and (len(solo_candidates) > 0 or mixed_collisions < 20):
         # 4. pick max_slots random yamls
-        mixed = set()
+        mixed_set = set()
         for n in range(max_slots):
             game = games[rng.randrange(0, game_count)]
             yaml = game_yamls[game][rng.randrange(0, len(game_yamls[game]))]
-            mixed.add(yaml)
-        mixed = tuple(sorted(mixed))
+            mixed_set.add(yaml)
+        mixed = tuple(sorted(mixed_set))
         if len(mixed) > 1 and mixed not in res:
             res.append(mixed)
             mixed_collisions = 0
@@ -266,7 +267,7 @@ def main(args: "argparse.Namespace"):
         print(ap.get_short_name(aps), end=": ")
         sys.stdout.flush()
         module_update(ap)
-    all_times: Dict[APInstall, float] = {}
+    all_times: Dict[APInstall, List[float]] = {}
     yaml_combinations = collect_yamls(args.yamls, args.slots,
                                       args.include.split(',') if args.include else None,
                                       args.exclude.split(',') if args.exclude else None,
@@ -341,7 +342,7 @@ def main(args: "argparse.Namespace"):
                     "avg": mean(all_times[ap]),
                     "max": max(all_times[ap])
                 } for ap in aps if ap in all_times
-            },
+            }
             import json
             with open(os.path.join(output_dir, 'results.json'), 'w', encoding="utf-8") as f:
                 json.dump(results, f, indent=2)
@@ -373,7 +374,7 @@ def main(args: "argparse.Namespace"):
 if __name__ == "__main__":
     import argparse
 
-    default_threads = max(1, os.cpu_count() - 2)
+    default_threads = max(1, (os.cpu_count() or 1) - 2)
 
     parser = argparse.ArgumentParser(description="Roll and compare AP seeds between one or more versions")
     parser.add_argument('aps', metavar='dir:venv', type=str, nargs='+',
