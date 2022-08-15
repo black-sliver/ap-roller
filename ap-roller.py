@@ -21,7 +21,7 @@ else:
     PathLike = Any
 
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 try:
     def get_rev():
         # noinspection PyUnresolvedReferences
@@ -94,7 +94,7 @@ def generate(ap: APInstall, seed: str, yamls: Iterable[PathLike], output_dir: Op
             args = f'--player_files_path "{tmpin}" --outputpath "{tmpout}" --seed "{seed}"'
             if ap_args:
                 for key, val in ap_args.items():
-                    args += f'--{key} "{val}"' if " " in val else f'--{key} {val}'
+                    args += f' --{key} "{val}"' if " " in val else f' --{key} {val}'
             script = _enter_venv(install, venv, "Starting generate")
             script += f'echo "" | python {" ".join(py_args) if py_args else ""} Generate.py {args}'
             start = time.monotonic()
