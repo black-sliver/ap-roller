@@ -21,6 +21,19 @@ else:
     Path = None
 
 
+__version__ = "0.1.0"
+try:
+    def get_rev():
+        # noinspection PyUnresolvedReferences
+        from git import Repo
+        repo = Repo(search_parent_directories=True)
+        sha = repo.head.commit.hexsha
+        return repo.git.rev_parse(sha, short=True)
+    __version__ += f"-{get_rev()}"
+except ImportError:
+    pass
+
+
 is_windows = os.name == "nt"
 
 
@@ -225,7 +238,9 @@ def main(args: "argparse.Namespace"):
     import threading
     # NOTE: currently the yaml stage has to be identical between the two APs, otherwise it's hard to compare w/ weights
     # TODO: weights-to-yaml pre-parse
-    print(args)
+    print(f"ap-roller {__version__}")
+    if args.verbose:
+        print(f"args: {args}")
     repeat = args.repeat
     seeds = args.seeds.split(',') if args.seeds else (str(i) for i in range(1, 6))
     aps = tuple(APInstall(*arg.rsplit(':', 1)) for arg in args.aps)
