@@ -21,7 +21,7 @@ else:
     PathLike = Any
 
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 try:
     def get_rev():
         # noinspection PyUnresolvedReferences
@@ -243,7 +243,14 @@ def main(args: "argparse.Namespace"):
     if args.verbose:
         print(f"args: {args}")
     repeat = args.repeat
-    seeds = args.seeds.split(',') if args.seeds else (str(i) for i in range(1, 6))
+    if args.seeds:
+        if '-' in args.seeds:
+            start, end = map(int, args.seeds.split('-'))
+            seeds = map(str, range(start, end+1))
+        else:
+            seeds = args.seeds.split(',')
+    else:
+        seeds = map(str, range(1, 6))  # default 1..5
     aps = tuple(APInstall(*arg.rsplit(':', 1)) for arg in args.aps)
     ap_args = {}
     if args.spoiler:
@@ -387,7 +394,7 @@ if __name__ == "__main__":
     parser.add_argument("--exclude", help="Comma separated list of games to exclude. Default: none")
     parser.add_argument("--slots", default=3, type=int, help="Max slots to roll at the same time")
     parser.add_argument("--limit", default=1000, type=int, help="Total games to roll")
-    parser.add_argument("--seeds", help="Comma separated list of seed numbers to roll.")
+    parser.add_argument("--seeds", help="Comma separated list or 'start-stop' of seed numbers to roll.")
     parser.add_argument("--spoiler", help="Passed to generate. 0=None, 2=Full")
     parser.add_argument("-O", "--optimize", action="store_true", help="Run python with -O")
     parser.add_argument('-v', '--verbose', action="store_true", help="Be more verbose")
