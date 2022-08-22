@@ -10,4 +10,5 @@ Subnautica:
   item_pool: valuable
   goal: random
   creature_scans: random
+  creature_scan_logic: random
   death_link: random

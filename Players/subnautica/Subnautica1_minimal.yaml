@@ -10,4 +10,5 @@ Subnautica:
   item_pool: standard
   goal: random
   creature_scans: 0
+  creature_scan_logic: random
   death_link: random
