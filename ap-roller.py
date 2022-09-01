@@ -72,15 +72,15 @@ def _b64hash(*args: Any) -> str:
 
 
 def _enter_venv(install: PathLike, venv: Optional[str] = None, msg: Optional[str] = None) -> str:
-    script = f'cd "{install}"'
+    script = f'cd "{install}" &&'
     if is_windows and venv:
-        script += f'&& {venv}\\Scripts\\activate.bat&& '
-        script += f'echo "{msg}"&& echo "venv: %VIRTUAL_ENV%"&& echo&& '
+        script += f'{venv}\\Scripts\\activate.bat && '
+        script += f'echo "{msg}" && echo "venv: %VIRTUAL_ENV%" && echo && '
     elif venv:
-        script += f'; source {venv}/bin/activate; '
-        script += f'; echo "{msg}"; echo "venv: $VIRTUAL_ENV"; echo; '
+        script += f'source {venv}/bin/activate && '
+        script += f'echo "{msg}"; echo "venv: $VIRTUAL_ENV" && echo && '
     else:
-        script += f'; echo "{msg}"; echo "w/o venv"; echo; '
+        script += f'echo "{msg}" && echo "w/o venv" && echo && '
     return script
 
 
