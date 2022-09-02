@@ -259,7 +259,7 @@ def main(args: "argparse.Namespace"):
     py_args = '-O' if args.optimize else []
     for ap in aps:
         assert os.path.isdir(str(ap)), f"AP directory or venv does not exist: '{ap}'"
-    output_dir = os.path.join("output", f"{os.getpid()}_{datetime.now().strftime('%m_%d-%H_%M-%S')}")
+    output_dir = os.path.join("output", f"{datetime.now().strftime('%m_%d-%H_%M_%S')}_{os.getpid()}")
     os.makedirs(output_dir, exist_ok=True)
     print(f"Outputting to {output_dir}\n")
     results = {"stats": {
@@ -391,8 +391,10 @@ if __name__ == "__main__":
     parser.add_argument("--threads", default=default_threads, type=int, help="NUmber of CPU threads to use")
     parser.add_argument("--yamls", default="default",
                         help="Change which yamls to consider. 'default', 'minimal' or 'all'.")
-    parser.add_argument("--include", help="Comma separated list of games to include. Default: all")
-    parser.add_argument("--exclude", help="Comma separated list of games to exclude. Default: none")
+    parser.add_argument("--include", help="Comma separated list of games to include, using directory names."
+                                          " Default: all")
+    parser.add_argument("--exclude", help="Comma separated list of games to exclude, using directory names."
+                                          " Default: none")
     parser.add_argument("--slots", default=3, type=int, help="Max slots to roll at the same time")
     parser.add_argument("--limit", default=1000, type=int, help="Total games to roll")
     parser.add_argument("--seeds", help="Comma separated list or 'start-stop' of seed numbers to roll.")
