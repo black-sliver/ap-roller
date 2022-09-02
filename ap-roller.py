@@ -9,6 +9,7 @@ import time
 import typing
 from base64 import urlsafe_b64encode
 from collections.abc import Iterable
+from datetime import datetime
 from functools import lru_cache
 from statistics import mean
 from typing import Any, Dict, List, NamedTuple, Optional, Tuple, Union
@@ -258,7 +259,7 @@ def main(args: "argparse.Namespace"):
     py_args = '-O' if args.optimize else []
     for ap in aps:
         assert os.path.isdir(str(ap)), f"AP directory or venv does not exist: '{ap}'"
-    output_dir = os.path.join("output", str(os.getpid()))
+    output_dir = os.path.join("output", f"{os.getpid()}_{datetime.now().strftime('%m_%d-%H_%M-%S')}")
     os.makedirs(output_dir, exist_ok=True)
     print(f"Outputting to {output_dir}\n")
     results = {"stats": {
