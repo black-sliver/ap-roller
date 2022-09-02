@@ -145,9 +145,9 @@ def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> Li
     :param max_slots:
       maximum number of slots in each set
     :param include:
-      list of games to include, None if all games should be included
+      list of games to include, None if all games should be included, using directory names
     :param exclude:
-      list of games to exclude, None if no games should be excluded
+      list of games to exclude, None if no games should be excluded, using directory names
     :param limit:
       maximum number of total yaml combinations
     :return:
