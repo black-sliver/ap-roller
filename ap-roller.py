@@ -88,8 +88,8 @@ def _enter_venv(install: PathLike, venv: Optional[str] = None, msg: Optional[str
 def generate(ap: APInstall, seed: str, yamls: Iterable[PathLike], output_dir: Optional[PathLike],
              py_args: Optional[List[str]] = None, ap_args: Optional[Dict[str, str]] = None) -> Optional[float]:
     install, venv = ap
-    with tempfile.TemporaryDirectory() as tmpin:
-        with tempfile.TemporaryDirectory() as tmpout:
+    with tempfile.TemporaryDirectory(prefix="ap-in_") as tmpin:
+        with tempfile.TemporaryDirectory(prefix="ap-out_") as tmpout:
             for yaml in yamls:
                 shutil.copy(yaml, tmpin)
             args = f'--player_files_path "{tmpin}" --outputpath "{tmpout}" --seed "{seed}"'
