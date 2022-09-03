@@ -277,8 +277,8 @@ def main(args: "argparse.Namespace"):
         module_update(ap)
     all_times: Dict[APInstall, List[float]] = {}
     yaml_combinations = collect_yamls(args.yamls, args.slots,
-                                      args.include.split(',') if args.include else None,
-                                      args.exclude.split(',') if args.exclude else None,
+                                      ",".join(args.include).split(',') if args.include else None,
+                                      ",".join(args.exclude).split(',') if args.exclude else None,
                                       args.limit)
 
     write_lock = threading.Lock()
@@ -391,10 +391,10 @@ if __name__ == "__main__":
     parser.add_argument("--threads", default=default_threads, type=int, help="NUmber of CPU threads to use")
     parser.add_argument("--yamls", default="default",
                         help="Change which yamls to consider. 'default', 'minimal' or 'all'.")
-    parser.add_argument("--include", help="Comma separated list of games to include, using directory names."
-                                          " Default: all")
-    parser.add_argument("--exclude", help="Comma separated list of games to exclude, using directory names."
-                                          " Default: none")
+    parser.add_argument("--include", action="append",
+                        help="Comma separated list of games to include, using directory names. Default: all")
+    parser.add_argument("--exclude", action="append",
+                        help="Comma separated list of games to exclude, using directory names. Default: none")
     parser.add_argument("--slots", default=3, type=int, help="Max slots to roll at the same time")
     parser.add_argument("--limit", default=1000, type=int, help="Total games to roll")
     parser.add_argument("--seeds", help="Comma separated list or 'start-stop' of seed numbers to roll.")
