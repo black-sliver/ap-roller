@@ -5,6 +5,7 @@ venv/
 build/
 dist/
 
-output/
+/output/
+/extra/
 
 .idea
