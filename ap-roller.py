@@ -36,6 +36,7 @@ except ImportError:
 
 
 is_windows = os.name == "nt"
+allowed_repos = []
 
 
 class APInstall(NamedTuple):
@@ -236,13 +237,63 @@ def _waste_cycles(x=1):
 
 
 def main(args: "argparse.Namespace"):
-    import concurrent.futures
-    import threading
-    # NOTE: currently the yaml stage has to be identical between the two APs, otherwise it's hard to compare w/ weights
-    # TODO: weights-to-yaml pre-parse
+    from glob import glob
+    import itertools
+    from urllib.parse import urlparse
     print(f"ap-roller {__version__}")
+    args.extra = list(filter(lambda f: not f.endswith("basepatch.sfc"),
+                             itertools.chain(*[glob(pattern) for pattern in args.extra])))
     if args.verbose:
         print(f"args: {args}")
+    aps = [APInstall(*arg.rsplit(':', 1)) for arg in args.aps
+           if not arg.startswith('#') and not arg.startswith('https://')]
+    repos = [ap for ap in args.aps if ap.startswith('https://')]
+    for pr in map(lambda ap: int(ap[1:]), (ap for ap in args.aps if ap.startswith('#'))):
+        import requests
+        r = requests.get(f"https://api.github.com/repos/ArchipelagoMW/Archipelago/pulls/{pr}").json()
+        repos.append(f"{r['head']['repo']['clone_url']}:{r['head']['ref']}")
+    with tempfile.TemporaryDirectory(prefix="ap-repos_") as repos_dir:
+        for repo in repos:
+            if ':' in repo[6:]:
+                repo, label = repo.rsplit(':', 1)
+            else:
+                label = None
+            if repo not in allowed_repos:
+                if input(f"Allow running code from '{repo}'? [y/N] ").lower() not in ("y", "yes"):
+                    return 1
+                allowed_repos.append(repo)
+            url = urlparse(repo)
+            repo_folder_name = f"{url.hostname.replace('.', '-')}_{url.path[1:-4].replace('/', '-')}_" \
+                               f"{label.replace('/', '-')}"
+            if not all(0x20 <= ord(c) < 127 and c not in ("/", "\\", "\"", "'", ":") for c in repo_folder_name):
+                raise Exception(f"Bad character in repo '{repo_folder_name}'")
+            repo_dir = os.path.join(repos_dir, repo_folder_name)
+            os.makedirs(repo_dir, 0o700)
+            python = sys.executable
+            venv = "venv"
+            subprocess.run(f'cd "{repo_dir}" && '
+                           f'git init -q && git remote add origin "{repo}" && '
+                           f'git fetch -q origin "{label}" --depth=2 && git reset --hard FETCH_HEAD &&'
+                           f'{python} -m venv --upgrade-deps {venv}', shell=True)
+            for pattern in args.extra:
+                for src in glob(pattern):
+                    dst = os.path.join(repo_dir, os.path.basename(src))
+                    print(f"{src} -> {dst}")
+                    if os.path.isfile(src):
+                        shutil.copy2(src, dst)
+                    else:
+                        shutil.copytree(src, dst, ignore=shutil.ignore_patterns('*.pyc', '.git*', '__pycache__'))
+            aps.append(APInstall(repo_dir, venv))
+        assert aps, "No valid AP installation selected"  # in practice, we should error out before reaching this
+        roll(tuple(aps), args)
+    return 0
+
+
+def roll(aps, args: "argparse.Namespace"):
+    import concurrent.futures
+    import threading
+    # NOTE: currently the yaml stage has to be identical between the APs, otherwise it's hard to compare w/ weights
+    # TODO: weights-to-yaml pre-parse
     repeat = args.repeat
     if args.seeds:
         if '-' in args.seeds:
@@ -252,7 +303,6 @@ def main(args: "argparse.Namespace"):
             seeds = args.seeds.split(',')
     else:
         seeds = map(str, range(1, 6))  # default 1..5
-    aps = tuple(APInstall(*arg.rsplit(':', 1)) for arg in args.aps)
     ap_args = {}
     if args.spoiler:
         ap_args["spoiler"] = args.spoiler
@@ -385,7 +435,7 @@ if __name__ == "__main__":
     default_threads = max(1, (os.cpu_count() or 1) - 2)
 
     parser = argparse.ArgumentParser(description="Roll and compare AP seeds between one or more versions")
-    parser.add_argument('aps', metavar='dir:venv', type=str, nargs='+',
+    parser.add_argument('aps', metavar='dir:venv|"#<PR>"|repo:branch', type=str, nargs='+',
                         help='AP source directory followed by :venv')
     parser.add_argument("--repeat", default=4, type=int, help="Repeat each roll N times for averaging")
     parser.add_argument("--threads", default=default_threads, type=int, help="NUmber of CPU threads to use")
@@ -395,6 +445,8 @@ if __name__ == "__main__":
                         help="Comma separated list of games to include, using directory names. Default: all")
     parser.add_argument("--exclude", action="append",
                         help="Comma separated list of games to exclude, using directory names. Default: none")
+    parser.add_argument("--extra", action="append", default=["extra/*"],
+                        help="Glob string of extra files and folders to copy to downloaded repos. Default: ./extra/*")
     parser.add_argument("--slots", default=3, type=int, help="Max slots to roll at the same time")
     parser.add_argument("--limit", default=1000, type=int, help="Total games to roll")
     parser.add_argument("--seeds", help="Comma separated list or 'start-stop' of seed numbers to roll.")
@@ -402,4 +454,4 @@ if __name__ == "__main__":
     parser.add_argument("-O", "--optimize", action="store_true", help="Run python with -O")
     parser.add_argument('-v', '--verbose', action="store_true", help="Be more verbose")
 
-    main(parser.parse_args())
+    exit(main(parser.parse_args()))
