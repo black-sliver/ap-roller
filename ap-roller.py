@@ -9,6 +9,7 @@ import time
 import typing
 from base64 import urlsafe_b64encode
 from collections.abc import Iterable
+from datetime import datetime
 from functools import lru_cache
 from statistics import mean
 from typing import Any, Dict, List, NamedTuple, Optional, Tuple, Union
@@ -145,9 +146,9 @@ def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> Li
     :param max_slots:
       maximum number of slots in each set
     :param include:
-      list of games to include, None if all games should be included
+      list of games to include, None if all games should be included, using directory names
     :param exclude:
-      list of games to exclude, None if no games should be excluded
+      list of games to exclude, None if no games should be excluded, using directory names
     :param limit:
       maximum number of total yaml combinations
     :return:
@@ -258,7 +259,7 @@ def main(args: "argparse.Namespace"):
     py_args = '-O' if args.optimize else []
     for ap in aps:
         assert os.path.isdir(str(ap)), f"AP directory or venv does not exist: '{ap}'"
-    output_dir = os.path.join("output", str(os.getpid()))
+    output_dir = os.path.join("output", f"{datetime.now().strftime('%m_%d-%H_%M_%S')}_{os.getpid()}")
     os.makedirs(output_dir, exist_ok=True)
     print(f"Outputting to {output_dir}\n")
     results = {"stats": {
@@ -390,8 +391,10 @@ if __name__ == "__main__":
     parser.add_argument("--threads", default=default_threads, type=int, help="NUmber of CPU threads to use")
     parser.add_argument("--yamls", default="default",
                         help="Change which yamls to consider. 'default', 'minimal' or 'all'.")
-    parser.add_argument("--include", help="Comma separated list of games to include. Default: all")
-    parser.add_argument("--exclude", help="Comma separated list of games to exclude. Default: none")
+    parser.add_argument("--include", help="Comma separated list of games to include, using directory names."
+                                          " Default: all")
+    parser.add_argument("--exclude", help="Comma separated list of games to exclude, using directory names."
+                                          " Default: none")
     parser.add_argument("--slots", default=3, type=int, help="Max slots to roll at the same time")
     parser.add_argument("--limit", default=1000, type=int, help="Total games to roll")
     parser.add_argument("--seeds", help="Comma separated list or 'start-stop' of seed numbers to roll.")
