@@ -297,8 +297,8 @@ def roll(aps, args: "argparse.Namespace"):
     repeat = args.repeat
     if args.seeds:
         if '-' in args.seeds:
-            start, end = map(int, args.seeds.split('-'))
-            seeds = map(str, range(start, end+1))
+            range_start, range_end = map(int, args.seeds.split('-'))
+            seeds = map(str, range(range_start, range_end+1))
         else:
             seeds = args.seeds.split(',')
     else:
