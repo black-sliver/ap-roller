@@ -94,9 +94,6 @@ A Link to the Past:
   scams: random
   restrict_dungeon_item_on_boss: random
   boss_shuffle: random
-  pot_shuffle: random
-  misery_mire_medallion: random
-  turtle_rock_medallion: random
   enemy_shuffle: random
   enemy_damage: random
   enemy_health: random
