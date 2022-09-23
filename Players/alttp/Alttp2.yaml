@@ -1,72 +1,11 @@
-# What is this file?
-# This file contains options which allow you to configure your multiworld experience while allowing others
-# to play how they want as well.
-
-# How do I use it?
-# The options in this file are weighted. This means the higher number you assign to a value, the more
-# chances you have for that option to be chosen. For example, an option like this:
-#
-# map_shuffle:
-#   on: 5
-#   off: 15
-#
-# Means you have 5 chances for map shuffle to occur, and 15 chances for map shuffle to be turned off
-
-# I've never seen a file like this before. What characters am I allowed to use?
-# This is a .yaml file. You are allowed to use most characters.
-# To test if your yaml is valid or not, you can use this website:
-# http://www.yamllint.com/
-
-description: Default A Link to the Past Template # Used to describe your yaml. Useful if you have multiple files
-# Your name in-game. Spaces will be replaced with underscores and there is a 16 character limit
-name: YourName{number}
-#{player} will be replaced with the player's slot number.
-#{PLAYER} will be replaced with the player's slot number if that slot number is greater than 1.
-#{number} will be replaced with the counter value of the name.
-#{NUMBER} will be replaced with the counter value of the name if the counter value is greater than 1.
-game:
-  A Link to the Past: 1
-requires:
-  version: 0.3.5 # Version of Archipelago required for this yaml to work as expected.
-# Shared Options supported by all games:
+name: Alttp2
+game: A Link to the Past
+description: mostly random, non-minimal
 A Link to the Past:
-  progression_balancing: # A system that can move progression earlier, to try and prevent the player from getting stuck and bored early.
-    #    [0-99, default 50] A lower setting means more getting stuck. A higher setting means less getting stuck.
-    # you can add additional values between minimum and maximum
-    random: 0
-    random-low: 0
-    random-high: 0
-    disabled: 0
-    normal: 50
-    extreme: 0
-  accessibility: # Set rules for reachability of your items/locations.
-    #    Locations: ensure everything can be reached and acquired.
-    #    Items: ensure all logically relevant items can be acquired.
-    #    Minimal: ensure what is needed to reach your goal can be acquired.
-    locations: 0
-    items: 50
-    minimal: 0
-  local_items: # Forces these items to be in their native world.
-    []
-
-  non_local_items: # Forces these items to be outside their native world.
-    []
-
-  start_hints: # Start with these item's locations prefilled into the !hint command.
-    []
-
-  start_location_hints: # Start with these locations and their item prefilled into the !hint command
-    []
-
-  exclude_locations: # Prevent these locations from having an important item
-    []
-
-  priority_locations: # Prevent these locations from having an unimportant item
-    []
-
-  item_links: # Share part of your item pool with other players.
-    []
-
+  progression_balancing: 0
+  accessibility:
+    locations: 1
+    items: 1
   glitches_required: random
   dark_room_logic: random
   glitch_boots: random
@@ -93,7 +32,12 @@ A Link to the Past:
   hints: random
   scams: random
   restrict_dungeon_item_on_boss: random
-  boss_shuffle: random
+  boss_shuffle:
+    random: 1
+    moldorm: 1
+    trinexx;random: 1
+    Skull Woods-Moldorm;Palace of Darkness-Armos Knights;full: 1
+  pot_shuffle: random
   enemy_shuffle: random
   enemy_damage: random
   enemy_health: random
@@ -141,5 +85,7 @@ A Link to the Past:
   beemizer_trap_chance: random
   death_link: random
   allow_collect: random
-  sprite: random
+  sprite:
+    Penguin Link: 1
+    random: 1
   
