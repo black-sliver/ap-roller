@@ -106,7 +106,7 @@ def generate(ap: APInstall, seed: str, yamls: Iterable[PathLike], output_dir: Op
                 res = subprocess.CompletedProcess(script, -1, "",
                                                   str(ex).replace("timed out after", "\ntimed out after"))
             end = time.monotonic()
-            if res.returncode == 0:
+            if res.returncode == 0 and "Done. Enjoy." in res.stdout:
                 return end - start
             if output_dir:
                 run_id = f"{_b64hash(ap)[:8]}_{seed}_{_b64hash(tuple(yamls))[:16]}"
