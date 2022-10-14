@@ -22,7 +22,7 @@ else:
     PathLike = Any
 
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 try:
     def get_rev():
         # noinspection PyUnresolvedReferences
@@ -306,7 +306,7 @@ def roll(aps, args: "argparse.Namespace"):
     ap_args = {}
     if args.spoiler:
         ap_args["spoiler"] = args.spoiler
-    py_args = '-O' if args.optimize else []
+    py_args = ['-O'] if args.optimize else []
     for ap in aps:
         assert os.path.isdir(str(ap)), f"AP directory or venv does not exist: '{ap}'"
     output_dir = os.path.join("output", f"{datetime.now().strftime('%m_%d-%H_%M_%S')}_{os.getpid()}")
