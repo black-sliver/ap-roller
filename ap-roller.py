@@ -87,7 +87,8 @@ def _enter_venv(install: PathLike, venv: Optional[str] = None, msg: Optional[str
 
 
 def generate(ap: APInstall, seed: str, yamls: Iterable[PathLike], output_dir: Optional[PathLike],
-             py_args: Optional[List[str]] = None, ap_args: Optional[Dict[str, str]] = None) -> Optional[float]:
+             py_args: Optional[List[str]] = None, ap_args: Optional[Dict[str, str]] = None,
+             timeout: int = 60) -> Optional[float]:
     install, venv = ap
     with tempfile.TemporaryDirectory(prefix="ap-in_") as tmpin:
         with tempfile.TemporaryDirectory(prefix="ap-out_") as tmpout:
@@ -101,7 +102,7 @@ def generate(ap: APInstall, seed: str, yamls: Iterable[PathLike], output_dir: Op
             script += f'echo "" | python {" ".join(py_args) if py_args else ""} Generate.py {args}'
             start = time.monotonic()
             try:
-                res = subprocess.run(script, shell=True, capture_output=True, text=True, timeout=60)
+                res = subprocess.run(script, shell=True, capture_output=True, text=True, timeout=timeout)
             except subprocess.TimeoutExpired as ex:
                 res = subprocess.CompletedProcess(script, -1, "",
                                                   str(ex).replace("timed out after", "\ntimed out after"))
@@ -303,6 +304,7 @@ def roll(aps, args: "argparse.Namespace"):
             seeds = args.seeds.split(',')
     else:
         seeds = map(str, range(1, 6))  # default 1..5
+    timeout = args.timeout
     ap_args = {}
     if args.spoiler:
         ap_args["spoiler"] = args.spoiler
@@ -350,7 +352,7 @@ def roll(aps, args: "argparse.Namespace"):
         for _ in range(0, repeat):
             for ap in aps:
                 if times.get(ap, True) is not None:  # don't repeat failed runs
-                    res = generate(ap, seed, yamls, output_dir, ap_args=ap_args, py_args=py_args)
+                    res = generate(ap, seed, yamls, output_dir, ap_args=ap_args, py_args=py_args, timeout=timeout)
                     write_lock.acquire()
                     try:
                         results["stats"]["finished_execs"] += 1
@@ -451,6 +453,7 @@ if __name__ == "__main__":
     parser.add_argument("--limit", default=1000, type=int, help="Total games to roll")
     parser.add_argument("--seeds", help="Comma separated list or 'start-stop' of seed numbers to roll.")
     parser.add_argument("--spoiler", help="Passed to generate. 0=None, 2=Full")
+    parser.add_argument("--timeout", default=60, type=int, help="Time limit of each generation in seconds.")
     parser.add_argument("-O", "--optimize", action="store_true", help="Run python with -O")
     parser.add_argument('-v', '--verbose', action="store_true", help="Be more verbose")
 
