@@ -4,36 +4,76 @@ description: mostly random, non-minimal
 A Link to the Past:
   progression_balancing: 0
   accessibility:
-    items: 1
     locations: 1
-    minimal: 0
-  crystals_needed_for_gt: 7
-  crystals_needed_for_ganon: 7
+    items: 1
+  glitches_required: random
+  dark_room_logic: random
+  glitch_boots: random
+  world_state: random
+  crystals_needed_for_gt: random
+  crystals_needed_for_ganon: random
   open_pyramid: random
+  triforce_pieces_mode: random
+  triforce_pieces_extra: random
+  triforce_pieces_percentage: random
+  triforce_pieces_available: random
+  triforce_pieces_required: random
   bigkey_shuffle: random
   smallkey_shuffle: random
   compass_shuffle: random
   map_shuffle: random
+  dungeon_counters: random
   progressive: random
   swordless: random
+  item_pool: random
+  item_functionality: random
   retro_bow: random
   retro_caves: random
   hints: random
   scams: random
   restrict_dungeon_item_on_boss: random
+  boss_shuffle:
+    random: 1
+    moldorm: 1
+    trinexx;random: 1
+    Skull Woods-Moldorm;Palace of Darkness-Armos Knights;full: 1
   pot_shuffle: random
   enemy_shuffle: random
+  enemy_damage: random
+  enemy_health: random
   killable_thieves: random
   bush_shuffle: random
   shop_item_slots: random
-  shop_price_modifier: 100
+  shop_price_modifier: random
+  timer: random
+  countdown_start_time: random
+  red_clock_time: random
+  blue_clock_time: random
+  green_clock_time: random
+  shuffle_prizes: random
   tile_shuffle: random
+  use_random_sprite_events: random
+  random_sprite_events: # Allows different random sprite events to be simultaneously enabled.
+    - on_hit
+    - on_enter
+    - on_exit
+    - on_slash
+    - on_item
+    - on_bonk
+  sprite_pool: # Limits the pool of available sprites for random events to specified pool.
+    - Adol
+    - Aria
+    - Baby Fro
+    - Baby Metroid
+    - Eirika
+    - Frog Link
+  start_inventory:
+    Pegasus Boots: 1
   ow_palettes: random
   uw_palettes: random
   hud_palettes: random
   sword_palettes: random
   shield_palettes: random
-  link_palettes: random
   heartbeep: random
   heartcolor: random
   quickswap: random
@@ -41,8 +81,11 @@ A Link to the Past:
   music: random
   reduceflashing: random
   triforcehud: random
-  glitch_boots: random
-  beemizer_total_chance: 10
-  beemizer_trap_chance: 60
+  beemizer_total_chance: random
+  beemizer_trap_chance: random
   death_link: random
-  allow_collect: 'false'
+  allow_collect: random
+  sprite:
+    Penguin Link: 1
+    random: 1
+  
