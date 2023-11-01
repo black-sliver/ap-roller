@@ -134,9 +134,22 @@ def module_update(ap: APInstall, py_args: Optional[List[str]] = None) -> None:
     install, venv = ap
     script = _enter_venv(install, venv, "Running ModuleUpdate")
     script += f'echo "" | python {" ".join(py_args) if py_args else ""} ModuleUpdate.py -y'
-    if subprocess.run(script, shell=True, timeout=30).returncode:
+    if subprocess.run(script, shell=True, timeout=60).returncode:
         raise Exception(f"Error running ModuleUpdate for '{ap}'")
 
+def pyx_build(ap: APInstall, py_args: Optional[List[str]] = None) -> None:
+    install, venv = ap
+    script = _enter_venv(install, venv, "Running pyx builds")
+    script += f'python {" ".join(py_args) if py_args else ""} -c "import NetUtils"'
+    if subprocess.run(script, shell=True, timeout=60).returncode:
+        raise Exception(f"Error running pyx builds for '{ap}'")
+
+def update_settings(ap: APInstall, py_args: Optional[List[str]] = None) -> None:
+    install, venv = ap
+    script = _enter_venv(install, venv, "Update host.yaml")
+    script += f'echo "" | python {" ".join(py_args) if py_args else ""} Launcher.py --update_settings'
+    if subprocess.run(script, shell=True, timeout=60).returncode:
+        raise Exception(f"Error updating host.yaml for '{ap}'")
 
 def collect_yamls(mode, max_slots, include=None, exclude=None, limit=1000) -> List[Tuple[str, ...]]:
     """
@@ -327,6 +340,8 @@ def roll(aps, args: "argparse.Namespace"):
         print(ap.get_short_name(aps), end=": ")
         sys.stdout.flush()
         module_update(ap)
+        pyx_build(ap)
+        update_settings(ap)
     all_times: Dict[APInstall, List[float]] = {}
     yaml_combinations = collect_yamls(args.yamls, args.slots,
                                       ",".join(args.include).split(',') if args.include else None,
